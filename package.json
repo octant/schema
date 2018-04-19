@@ -1,0 +1,20 @@
+{
+  "name": "test-testing",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon --exec babel-node --presets env -- ./src/index.js",
+    "build": "babel src --ignore **/*.test.js --out-dir build",
+    "test": "jest --watch"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-jest": "^22.4.3",
+    "babel-preset-env": "^1.6.1",
+    "jest": "^22.4.3",
+    "nodemon": "^1.11.0",
+    "standard": "^8.6.0"
+  }
+}
