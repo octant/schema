@@ -35,16 +35,6 @@ export default class Schema {
   validate (fields, checkAll = false) {
     const errors = {}
 
-    /**
-     * Check that all required fields in the schemaDefinition are present.
-     * If checkAll is true the field will be checked whether it is required or not
-     */
-    // Object.keys(this.schemaDefinition).forEach((field) => {
-    //   if (Object.keys(fields).indexOf(field) === -1 && (checkAll || this.schemaDefinition[field].isRequired)) {
-    //     errors[field] = ``
-    //   }
-    // })
-
     Object.keys(this.schemaDefinition).forEach((key) => {
       const {
         defaultValue,
