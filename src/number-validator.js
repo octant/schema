@@ -15,7 +15,7 @@ export default class NumberValidator extends Validator {
     const {min, prompt} = this.fieldDefinition
     return {
       passed: Number(value) >= Number(min),
-      message: prompt === undefined ? `should be no less than ${min}` : prompt
+      message: prompt === undefined ? `should not be less than ${min}` : prompt
     }
   }
 
@@ -29,7 +29,7 @@ export default class NumberValidator extends Validator {
     const {max, prompt} = this.fieldDefinition
     return {
       passed: Number(value) <= Number(max),
-      message: prompt === undefined ? `should be no more than ${max}` : prompt
+      message: prompt === undefined ? `should not be more than ${max}` : prompt
     }
   }
 }
