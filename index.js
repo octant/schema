@@ -1,4 +1,4 @@
-import Schema from './schema'
+import Schema from './src/schema'
 import definition from './schema-definition'
 
 const schema = new Schema(definition)

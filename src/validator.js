@@ -1,8 +1,18 @@
+/**
+ * Base class for specific validators.
+ * @param {Object} fieldDefinition schema for specific field
+ */
 export default class Validator {
   constructor (fieldDefinition) {
     this.fieldDefinition = fieldDefinition
   }
 
+  /**
+   * Validate a single field.
+   * @param {*} fieldValue value of field
+   * @param {Object} fields all fields in the form
+   * @returns {Array} of all error messages for this field
+   */
   validate (fieldValue, fields) {
     const {
       custom,
@@ -60,14 +70,26 @@ export default class Validator {
     return messages
   }
 
+  /**
+   * Tests field value against the regEx in the field definition.
+   * @param {String | Number} value field value
+   * @returns {Object} containing the pass/fail result and error message
+   * if validation failed
+   */
   properlyFormatted (value) {
     const {regEx, prompt} = this.fieldDefinition
     return {
-      passed: Array.isArray(value.match(regEx)),
+      passed: regEx.test(value),
       message: prompt === undefined ? `improperly formatted` : prompt
     }
   }
 
+  /**
+   * Invokes the custom callback for the current field definition
+   * @param {*} fields All for fields
+   * @returns {Object} containing the pass/fail result and error message
+   * if validation failed
+   */
   invokeCustomValidation (fields) {
     const {custom, prompt} = this.fieldDefinition
     return {

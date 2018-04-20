@@ -5,7 +5,7 @@ export default class SelectValidator extends Validator {
     const {min, prompt} = this.fieldDefinition
     return {
       passed: value !== '',
-      message: prompt === undefined ? `must select a vlue ${min}` : prompt
+      message: prompt === undefined ? `must select a value ${min}` : prompt
     }
   }
 }

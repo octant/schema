@@ -3,6 +3,11 @@ import NumberValidator from './number-validator'
 import SelectValidator from './select-validator'
 import StringValidator from './string-validator'
 
+/**
+ * Interpret schema definitions and validate field
+ * values based on the definition.
+ * @param {Object} schemaDefinition
+ */
 export default class Schema {
   constructor (schemaDefinition) {
     this.schemaDefinition = schemaDefinition
@@ -25,9 +30,10 @@ export default class Schema {
   }
 
   /**
-   * Validate form fields
+   * Runs the validation rule on every field.
    * @param {*} fields list of form fields
    * @param {boolean} checkAll forces a check on all fields
+   * @returns {Object} containing all fields with a validation error
    */
   validate (fields, checkAll = false) {
     const errors = {}
@@ -49,14 +55,21 @@ export default class Schema {
     return errors
   }
 
+  /**
+   * Validates fields and returns true if no errors are returned by the validate
+   * function.
+   * @param {*} fields list of form fields
+   * @returns {boolean} that is true if an empty object is returned by validate
+   */
   isValid (fields) {
     return Object.keys(this.validate(fields, true)).length === 0
   }
 
-  lessThan (x, y) {
-    return x.length < y
-  }
-
+  /**
+   * Creates an object of field names associated with
+   * the correct type of Validator.
+   * @returns {Object} of fields and their validators
+   */
   createValidators () {
     const validators = {}
     Object.keys(this.schemaDefinition).forEach((key) => {
@@ -82,6 +95,10 @@ export default class Schema {
     return validators
   }
 
+  /**
+   * Returns the current schema definition.
+   * @returns {Object} containing the schema definition
+   */
   definition () {
     return this.schemaDefinition
   }
