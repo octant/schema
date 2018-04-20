@@ -41,6 +41,18 @@ describe('Schema', () => {
     })
   })
 
+  test('returns "*" for all required fields with a value of ""', () => {
+    const fields = {
+      dob: '1985-03-02',
+      firstName: '',
+      lastName: ''
+    }
+    expect(validator.validate(fields)).toEqual({
+      firstName: '*',
+      lastName: '*'
+    })
+  })
+
   test('check can be forced for all fields even if they are not a required field', () => {
     const fields = {
       dob: '1985-03-02',
