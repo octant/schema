@@ -15,15 +15,13 @@ export default class Schema {
 
   /**
    * Loops through the schema definition and extracts the
-   * default value from each feild.
+   * default value from each field.
    * @returns {Object} consisting of field names and their default value
    */
   defaultValues () {
     const defaultValues = {}
     Object.keys(this.schemaDefinition).forEach((key) => {
-      if (this.schemaDefinition[key].defaultValue !== undefined) {
-        defaultValues[key] = this.schemaDefinition[key].defaultValue
-      }
+      defaultValues[key] = this.schemaDefinition[key].defaultValue || ''
     })
     return defaultValues
   }
@@ -36,13 +34,28 @@ export default class Schema {
    */
   validate (fields, checkAll = false) {
     const errors = {}
-    Object.keys(this.schemaDefinition).forEach((key) => {
+
+    /**
+     * Check that all required fields in the schemaDefinition are present.
+     * If checkAll is true the field will be checked whether it is required or not
+     */
+    Object.keys(this.schemaDefinition).forEach((field) => {
+      if (Object.keys(fields).indexOf(field) === -1 && (checkAll || this.schemaDefinition[field].isRequired)) {
+        errors[field] = `${field} is a required field`
+      }
+    })
+
+    const fieldsToCheck = checkAll ? this.schemaDefinition : fields
+    Object.keys(fieldsToCheck).forEach((key) => {
       const {
-        defaultValue,
-        isRequired,
-        alwaysCheck
+        defaultValue
       } = this.schemaDefinition[key]
-      const check = isRequired || alwaysCheck || (checkAll && (isRequired || fields[key] !== '')) || defaultValue !== fields[key]
+
+      /**
+       * Validate if checkAll is true but skip validating empty fields
+       * or fields that are set to their default value.
+       */
+      const check = (checkAll && fields[key] !== '') || defaultValue !== fields[key]
       if (check) {
         const messages = this.validators[key].validate(fields[key], fields)
         if (messages.length > 0) {
@@ -88,13 +101,5 @@ export default class Schema {
     })
 
     return validators
-  }
-
-  /**
-   * Returns the current schema definition.
-   * @returns {Object} containing the schema definition
-   */
-  definition () {
-    return this.schemaDefinition
   }
 }
