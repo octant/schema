@@ -1,6 +1,5 @@
 import DateValidator from './date-validator'
 import NumberValidator from './number-validator'
-import SelectValidator from './select-validator'
 import StringValidator from './string-validator'
 
 /**
@@ -75,10 +74,6 @@ export default class Schema {
     Object.keys(this.schemaDefinition).forEach((key) => {
       const { type } = this.schemaDefinition[key]
       switch (type) {
-        case 'select':
-          validators[key] = new SelectValidator(this.schemaDefinition[key])
-          break
-
         case 'number':
           validators[key] = new NumberValidator(this.schemaDefinition[key])
           break
