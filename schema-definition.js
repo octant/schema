@@ -5,25 +5,26 @@
  *  input [
  *    button,
  *    checkbox,
- *    date
- *    number,
+ *    date*
+ *    number*,
  *    password,
  *    radio,
  *    range,
  *    reset,
  *    submit,
- *    text,
+ *    text*,
  *  ],
  *  select,
  *  textarea
  * ]
- * label:
- * default:
- * required:
- * placeHolder:
- * min:
- * max:
  * custom:
+ * default:
+ * label:
+ * max:
+ * min:
+ * placeHolder:
+ * options:
+ * required:
  */
 const schema = {
   size: {
