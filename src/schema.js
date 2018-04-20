@@ -39,25 +39,22 @@ export default class Schema {
      * Check that all required fields in the schemaDefinition are present.
      * If checkAll is true the field will be checked whether it is required or not
      */
-    Object.keys(this.schemaDefinition).forEach((field) => {
-      if (Object.keys(fields).indexOf(field) === -1 && (checkAll || this.schemaDefinition[field].isRequired)) {
-        errors[field] = `${field} is a required field`
-      }
-    })
+    // Object.keys(this.schemaDefinition).forEach((field) => {
+    //   if (Object.keys(fields).indexOf(field) === -1 && (checkAll || this.schemaDefinition[field].isRequired)) {
+    //     errors[field] = ``
+    //   }
+    // })
 
-    const fieldsToCheck = checkAll ? this.schemaDefinition : fields
-    Object.keys(fieldsToCheck).forEach((key) => {
+    Object.keys(this.schemaDefinition).forEach((key) => {
       const {
-        defaultValue
+        defaultValue,
+        isRequired,
+        alwaysCheck
       } = this.schemaDefinition[key]
 
-      /**
-       * Validate if checkAll is true but skip validating empty fields
-       * or fields that are set to their default value.
-       */
-      const check = (checkAll && fields[key] !== '') || defaultValue !== fields[key]
+      const check = isRequired || alwaysCheck || (checkAll && (isRequired || fields[key] !== '')) || defaultValue !== fields[key]
       if (check) {
-        const messages = this.validators[key].validate(fields[key], fields)
+        const messages = fields[key] !== undefined ? this.validators[key].validate(fields[key], fields) : ['missing from form']
         if (messages.length > 0) {
           errors[key] = messages.shift()
         }

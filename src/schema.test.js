@@ -45,7 +45,8 @@ describe('Schema', () => {
     const fields = {
       dob: '1985-03-02',
       firstName: '',
-      lastName: ''
+      lastName: '',
+      numberOfVehicles: 1
     }
     expect(validator.validate(fields)).toEqual({
       firstName: '*',
@@ -60,11 +61,11 @@ describe('Schema', () => {
       lastName: 'Wood'
     }
     expect(validator.validate(fields, true)).toEqual({
-      numberOfVehicles: 'should not be less than 1'
+      numberOfVehicles: 'missing from form'
     })
   })
 
-  test('returns an empty array when all fields are valid', () => {
+  test('returns an empty object when all fields are valid', () => {
     const fields = {
       dob: '1985-03-02',
       firstName: 'Michael',
@@ -81,7 +82,7 @@ describe('Schema', () => {
       firstName: 'Michael',
       numberOfVehicles: 33
     }
-    expect(validator.validate(fields)).toEqual({lastName: 'lastName is a required field'})
+    expect(validator.validate(fields)).toEqual({lastName: 'missing from form'})
   })
 
   test('returns errors for all failed validations', () => {
@@ -94,7 +95,7 @@ describe('Schema', () => {
     expect(validator.validate(fields)).toEqual({
       numberOfVehicles: 'should not be less than 1',
       firstName: 'should be no shorter than 2 characters',
-      lastName: 'lastName is a required field',
+      lastName: 'missing from form',
       dob: 'should be no earlier than 1910-01-01'
     })
   })
