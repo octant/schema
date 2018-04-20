@@ -19,7 +19,6 @@ export default class Validator {
       isRequired,
       max,
       min,
-      options,
       regEx
     } = this.fieldDefinition
 
@@ -29,6 +28,9 @@ export default class Validator {
       const { passed, message } = { passed: fieldValue !== '', message: '*' }
       if (!passed) {
         messages.push(message)
+
+        // Skip all other checks
+        return messages
       }
     }
 
@@ -55,13 +57,6 @@ export default class Validator {
 
     if (regEx !== undefined) {
       const { passed, message } = this.properlyFormatted(fieldValue)
-      if (!passed) {
-        messages.push(message)
-      }
-    }
-
-    if (options !== undefined) {
-      const { passed, message } = this.selectedValue(fieldValue)
       if (!passed) {
         messages.push(message)
       }
