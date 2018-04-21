@@ -3,8 +3,8 @@
  * @param {Object} fieldDefinition schema for specific field
  */
 export default class Validator {
-  constructor (fieldDefinition) {
-    this.fieldDefinition = fieldDefinition
+  constructor(fieldDefinition) {
+    this.fieldDefinition = fieldDefinition;
   }
 
   /**
@@ -13,56 +13,50 @@ export default class Validator {
    * @param {Object} fields all fields in the form
    * @returns {Array} of all error messages for this field
    */
-  validate (fieldValue, fields) {
-    const {
-      custom,
-      isRequired,
-      max,
-      min,
-      regEx
-    } = this.fieldDefinition
+  validate(fieldValue, fields) {
+    const { custom, isRequired, max, min, regEx } = this.fieldDefinition;
 
-    let messages = []
+    let messages = [];
 
     if (isRequired) {
-      const { passed, message } = { passed: fieldValue !== '', message: '*' }
+      const { passed, message } = { passed: fieldValue !== "", message: "*" };
       if (!passed) {
-        messages.push(message)
+        messages.push(message);
 
         // Skip all other checks
-        return messages
+        return messages;
       }
     }
 
     if (custom !== undefined) {
-      const { passed, message } = this.invokeCustomValidation(fields)
+      const { passed, message } = this.invokeCustomValidation(fields);
       if (!passed) {
-        messages.push(message)
+        messages.push(message);
       }
     }
 
     if (min !== undefined) {
-      const { passed, message } = this.greaterThan(fieldValue)
+      const { passed, message } = this.greaterThan(fieldValue);
       if (!passed) {
-        messages.push(message)
+        messages.push(message);
       }
     }
 
     if (max !== undefined) {
-      const { passed, message } = this.lessThan(fieldValue)
+      const { passed, message } = this.lessThan(fieldValue);
       if (!passed) {
-        messages.push(message)
+        messages.push(message);
       }
     }
 
     if (regEx !== undefined) {
-      const { passed, message } = this.properlyFormatted(fieldValue)
+      const { passed, message } = this.properlyFormatted(fieldValue);
       if (!passed) {
-        messages.push(message)
+        messages.push(message);
       }
     }
 
-    return messages
+    return messages;
   }
 
   /**
@@ -71,12 +65,12 @@ export default class Validator {
    * @returns {Object} containing the pass/fail result and error message
    * if validation failed
    */
-  properlyFormatted (value) {
-    const {regEx, prompt} = this.fieldDefinition
+  properlyFormatted(value) {
+    const { regEx, prompt } = this.fieldDefinition;
     return {
       passed: regEx.test(value),
       message: prompt === undefined ? `improperly formatted` : prompt
-    }
+    };
   }
 
   /**
@@ -85,11 +79,11 @@ export default class Validator {
    * @returns {Object} containing the pass/fail result and error message
    * if validation failed
    */
-  invokeCustomValidation (fields) {
-    const {custom, prompt} = this.fieldDefinition
+  invokeCustomValidation(fields) {
+    const { custom, prompt } = this.fieldDefinition;
     return {
       passed: custom(fields),
       message: prompt === undefined ? `custom validation failed` : prompt
-    }
+    };
   }
 }

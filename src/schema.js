@@ -1,6 +1,6 @@
-import DateValidator from './date-validator'
-import NumberValidator from './number-validator'
-import StringValidator from './string-validator'
+import DateValidator from "./date-validator";
+import NumberValidator from "./number-validator";
+import StringValidator from "./string-validator";
 
 /**
  * Interpret schema definitions and validate field
@@ -8,9 +8,9 @@ import StringValidator from './string-validator'
  * @param {Object} schemaDefinition
  */
 export default class Schema {
-  constructor (schemaDefinition) {
-    this.schemaDefinition = schemaDefinition
-    this.validators = this.createValidators()
+  constructor(schemaDefinition) {
+    this.schemaDefinition = schemaDefinition;
+    this.validators = this.createValidators();
   }
 
   /**
@@ -18,12 +18,12 @@ export default class Schema {
    * default value from each field.
    * @returns {Object} consisting of field names and their default value
    */
-  defaultValues () {
-    const defaultValues = {}
-    Object.keys(this.schemaDefinition).forEach((key) => {
-      defaultValues[key] = this.schemaDefinition[key].defaultValue || ''
-    })
-    return defaultValues
+  defaultValues() {
+    const defaultValues = {};
+    Object.keys(this.schemaDefinition).forEach(key => {
+      defaultValues[key] = this.schemaDefinition[key].defaultValue || "";
+    });
+    return defaultValues;
   }
 
   /**
@@ -32,26 +32,31 @@ export default class Schema {
    * @param {boolean} checkAll forces a check on all fields
    * @returns {Object} containing all fields with a validation error
    */
-  validate (fields, checkAll = false) {
-    const errors = {}
+  validate(fields, checkAll = false) {
+    const errors = {};
 
-    Object.keys(this.schemaDefinition).forEach((key) => {
-      const {
-        defaultValue,
-        isRequired,
-        alwaysCheck
-      } = this.schemaDefinition[key]
+    Object.keys(this.schemaDefinition).forEach(key => {
+      const { defaultValue, isRequired, alwaysCheck } = this.schemaDefinition[
+        key
+      ];
 
-      const check = isRequired || alwaysCheck || (checkAll && (isRequired || fields[key] !== '')) || defaultValue !== fields[key]
+      const check =
+        isRequired ||
+        alwaysCheck ||
+        (checkAll && (isRequired || fields[key] !== "")) ||
+        defaultValue !== fields[key];
       if (check) {
-        const messages = fields[key] !== undefined ? this.validators[key].validate(fields[key], fields) : ['missing from form']
+        const messages =
+          fields[key] !== undefined
+            ? this.validators[key].validate(fields[key], fields)
+            : ["missing from form"];
         if (messages.length > 0) {
-          errors[key] = messages.shift()
+          errors[key] = messages.shift();
         }
       }
-    })
+    });
 
-    return errors
+    return errors;
   }
 
   /**
@@ -60,8 +65,8 @@ export default class Schema {
    * @param {*} fields list of form fields
    * @returns {boolean} that is true if an empty object is returned by validate
    */
-  isValid (fields) {
-    return Object.keys(this.validate(fields, true)).length === 0
+  isValid(fields) {
+    return Object.keys(this.validate(fields, true)).length === 0;
   }
 
   /**
@@ -69,24 +74,24 @@ export default class Schema {
    * the correct type of Validator.
    * @returns {Object} of fields and their validators
    */
-  createValidators () {
-    const validators = {}
-    Object.keys(this.schemaDefinition).forEach((key) => {
-      const { type } = this.schemaDefinition[key]
+  createValidators() {
+    const validators = {};
+    Object.keys(this.schemaDefinition).forEach(key => {
+      const { type } = this.schemaDefinition[key];
       switch (type) {
-        case 'number':
-          validators[key] = new NumberValidator(this.schemaDefinition[key])
-          break
+        case "number":
+          validators[key] = new NumberValidator(this.schemaDefinition[key]);
+          break;
 
-        case 'date':
-          validators[key] = new DateValidator(this.schemaDefinition[key])
-          break
+        case "date":
+          validators[key] = new DateValidator(this.schemaDefinition[key]);
+          break;
 
         default:
-          validators[key] = new StringValidator(this.schemaDefinition[key])
+          validators[key] = new StringValidator(this.schemaDefinition[key]);
       }
-    })
+    });
 
-    return validators
+    return validators;
   }
 }

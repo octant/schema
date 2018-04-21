@@ -1,4 +1,4 @@
-import Validator from './validator'
+import Validator from "./validator";
 
 /**
  * String validator.
@@ -11,12 +11,15 @@ export default class StringValidator extends Validator {
    * @returns {Object} containing the pass/fail result and error message
    * if validation failed
    */
-  greaterThan (value) {
-    const {min, prompt} = this.fieldDefinition
+  greaterThan(value) {
+    const { min, prompt } = this.fieldDefinition;
     return {
       passed: value.length >= min,
-      message: prompt === undefined ? `should be no shorter than ${min} characters` : prompt
-    }
+      message:
+        prompt === undefined
+          ? `should be no shorter than ${min} characters`
+          : prompt
+    };
   }
 
   /**
@@ -25,11 +28,14 @@ export default class StringValidator extends Validator {
    * @returns {Object} containing the pass/fail result and error message
    * if validation failed
    */
-  lessThan (value) {
-    const {max, prompt} = this.fieldDefinition
+  lessThan(value) {
+    const { max, prompt } = this.fieldDefinition;
     return {
       passed: value.length <= max,
-      message: prompt === undefined ? `should be no longer than ${max} characters` : prompt
-    }
+      message:
+        prompt === undefined
+          ? `should be no longer than ${max} characters`
+          : prompt
+    };
   }
 }
