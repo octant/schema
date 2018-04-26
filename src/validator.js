@@ -16,7 +16,7 @@ export default class Validator {
   validate(fieldValue, fields) {
     const { custom, isRequired, max, min, regEx } = this.fieldDefinition;
 
-    let messages = [];
+    const messages = [];
 
     if (isRequired) {
       const { passed, message } = { passed: fieldValue !== "", message: "*" };
