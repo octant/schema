@@ -13,8 +13,10 @@ export default class DateValidator extends Validator {
    */
   greaterThan(value) {
     const { min, prompt } = this.fieldDefinition;
-    const userDate = new Date(value);
-    const minDate = new Date(min);
+    const userYMD = value.split("-");
+    const minYMD = min.split("-");
+    const userDate = new Date(userYMD[0], userYMD[1] - 1, userYMD[0]);
+    const minDate = new Date(minYMD[0], minYMD[1] - 1, minYMD[0]);
 
     return {
       passed: +userDate >= +minDate,
@@ -31,8 +33,11 @@ export default class DateValidator extends Validator {
    */
   lessThan(value) {
     const { max, prompt } = this.fieldDefinition;
-    const userDate = new Date(value);
-    const maxDate = new Date(max);
+    const userYMD = value.split("-");
+    const maxYMD = max.split("-");
+    const userDate = new Date(userYMD[0], userYMD[1] - 1, userYMD[0]);
+    const maxDate = new Date(maxYMD[0], maxYMD[1] - 1, maxYMD[0]);
+
     return {
       passed: +userDate <= +maxDate,
       message: prompt === undefined ? `should be no later than ${max}` : prompt
