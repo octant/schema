@@ -14,7 +14,7 @@ class Validator {
    * @returns {Array} of all error messages for this field
    */
   validate(fieldValue, fields) {
-    const { custom, isRequired, max, min, regEx } = this.fieldDefinition;
+    const { custom, isRequired, max, min, pattern } = this.fieldDefinition;
 
     const messages = [];
 
@@ -49,7 +49,7 @@ class Validator {
       }
     }
 
-    if (regEx !== undefined) {
+    if (pattern !== undefined) {
       const { passed, message } = this.properlyFormatted(fieldValue);
       if (!passed) {
         messages.push(message);
@@ -60,15 +60,15 @@ class Validator {
   }
 
   /**
-   * Tests field value against the regEx in the field definition.
+   * Tests field value against the pattern in the field definition.
    * @param {String | Number} value field value
    * @returns {Object} containing the pass/fail result and error message
    * if validation failed
    */
   properlyFormatted(value) {
-    const { regEx, prompt } = this.fieldDefinition;
+    const { pattern, prompt } = this.fieldDefinition;
     return {
-      passed: regEx.test(value),
+      passed: pattern.test(value),
       message: prompt === undefined ? `improperly formatted` : prompt
     };
   }

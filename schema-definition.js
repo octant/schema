@@ -78,7 +78,7 @@ const schema = {
     type: "text",
     label: "First Name",
     defaultValue: "",
-    regEx: /^[A-Z][a-zA-Z].*$/,
+    pattern: /^[A-Z][a-zA-Z].*$/,
     min: 2
   },
 
