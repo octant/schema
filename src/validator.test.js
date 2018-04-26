@@ -6,7 +6,7 @@ describe("Validator", () => {
   const fieldDefinition = {
     type: "text",
     custom: ({ age }) => age > 40,
-    isRequired: true,
+    required: true,
     pattern: /test/i
   };
 
@@ -38,7 +38,7 @@ describe("Validator", () => {
     const customValidator = new Validator({
       type: "text",
       custom: ({ age }) => age < 40,
-      isRequired: true,
+      required: true,
       pattern: /test/i,
       prompt: 'must contain "test" and age has to be less than 40'
     });

@@ -4,13 +4,13 @@ import NumberValidator from "./number-validator";
 
 describe("NumberValidator", () => {
   const fieldDefinition = {
-    isRequired: true,
+    required: true,
     min: 2,
     max: 6
   };
 
   const fieldDefinitionWithCustomMessage = {
-    isRequired: true,
+    required: true,
     min: 2,
     max: 6,
     prompt: "should be between 2 and 6"

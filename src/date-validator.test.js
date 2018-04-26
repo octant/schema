@@ -4,13 +4,13 @@ import DateValidator from "./date-validator";
 
 describe("DateValidator", () => {
   const fieldDefinition = {
-    isRequired: true,
+    required: true,
     min: "2018-01-01",
     max: "2018-02-28"
   };
 
   const fieldDefinitionWithCustomMessage = {
-    isRequired: true,
+    required: true,
     min: "2018-01-01",
     max: "2018-02-28",
     prompt: "should be between 2018-01-01 and 2018-02-28"

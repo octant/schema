@@ -7,19 +7,19 @@ describe("Schema", () => {
     dob: {
       type: "date",
       defaultValue: "2000-01-01",
-      isRequired: true,
+      required: true,
       min: "1910-01-01",
       max: "2018-02-01"
     },
     firstName: {
       type: "text",
-      isRequired: true,
+      required: true,
       min: 2,
       max: 20
     },
     lastName: {
       type: "text",
-      isRequired: true,
+      required: true,
       min: 2,
       max: 25
     },

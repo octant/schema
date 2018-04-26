@@ -36,14 +36,14 @@ export default class Schema {
     const errors = {};
 
     Object.keys(this.schemaDefinition).forEach(key => {
-      const { defaultValue, isRequired, alwaysCheck } = this.schemaDefinition[
+      const { defaultValue, required, alwaysCheck } = this.schemaDefinition[
         key
       ];
 
       const check =
-        isRequired ||
+        required ||
         alwaysCheck ||
-        (checkAll && (isRequired || fields[key] !== "")) ||
+        (checkAll && (required || fields[key] !== "")) ||
         defaultValue !== fields[key];
       if (check) {
         const messages =

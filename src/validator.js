@@ -14,11 +14,11 @@ export default class Validator {
    * @returns {Array} of all error messages for this field
    */
   validate(fieldValue, fields) {
-    const { custom, isRequired, max, min, pattern } = this.fieldDefinition;
+    const { custom, required, max, min, pattern } = this.fieldDefinition;
 
     const messages = [];
 
-    if (isRequired) {
+    if (required) {
       const { passed, message } = { passed: fieldValue !== "", message: "*" };
       if (!passed) {
         messages.push(message);

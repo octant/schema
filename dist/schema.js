@@ -14,11 +14,11 @@ class Validator {
    * @returns {Array} of all error messages for this field
    */
   validate(fieldValue, fields) {
-    const { custom, isRequired, max, min, pattern } = this.fieldDefinition;
+    const { custom, required, max, min, pattern } = this.fieldDefinition;
 
     const messages = [];
 
-    if (isRequired) {
+    if (required) {
       const { passed, message } = { passed: fieldValue !== "", message: "*" };
       if (!passed) {
         messages.push(message);
@@ -236,14 +236,14 @@ class Schema {
     const errors = {};
 
     Object.keys(this.schemaDefinition).forEach(key => {
-      const { defaultValue, isRequired, alwaysCheck } = this.schemaDefinition[
+      const { defaultValue, required, alwaysCheck } = this.schemaDefinition[
         key
       ];
 
       const check =
-        isRequired ||
+        required ||
         alwaysCheck ||
-        (checkAll && (isRequired || fields[key] !== "")) ||
+        (checkAll && (required || fields[key] !== "")) ||
         defaultValue !== fields[key];
       if (check) {
         const messages =
