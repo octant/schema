@@ -12,10 +12,11 @@ export default class NumberValidator extends Validator {
    * if validation failed
    */
   greaterThan(value) {
-    const { min, prompt } = this.fieldDefinition;
+    const { min, message } = this.fieldDefinition;
     return {
       passed: Number(value) >= Number(min),
-      message: prompt === undefined ? `should not be less than ${min}` : prompt
+      message:
+        message === undefined ? `should not be less than ${min}` : message
     };
   }
 
@@ -26,10 +27,11 @@ export default class NumberValidator extends Validator {
    * if validation failed
    */
   lessThan(value) {
-    const { max, prompt } = this.fieldDefinition;
+    const { max, message } = this.fieldDefinition;
     return {
       passed: Number(value) <= Number(max),
-      message: prompt === undefined ? `should not be more than ${max}` : prompt
+      message:
+        message === undefined ? `should not be more than ${max}` : message
     };
   }
 }

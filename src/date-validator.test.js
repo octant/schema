@@ -13,7 +13,7 @@ describe("DateValidator", () => {
     required: true,
     min: "2018-01-01",
     max: "2018-02-28",
-    prompt: "should be between 2018-01-01 and 2018-02-28"
+    message: "should be between 2018-01-01 and 2018-02-28"
   };
 
   const validator = new DateValidator(fieldDefinition);
@@ -39,7 +39,7 @@ describe("DateValidator", () => {
     ]);
   });
 
-  test("returns a custom message when prompt is present and validation fails", () => {
+  test("returns a custom message when message is present and validation fails", () => {
     expect(customMessageValidator.validate("2018-03-12", fields)).toEqual([
       "should be between 2018-01-01 and 2018-02-28"
     ]);

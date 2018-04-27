@@ -66,10 +66,10 @@ class Validator {
    * if validation failed
    */
   properlyFormatted(value) {
-    const { pattern, prompt } = this.fieldDefinition;
+    const { pattern, message } = this.fieldDefinition;
     return {
       passed: pattern.test(value),
-      message: prompt === undefined ? `improperly formatted` : prompt
+      message: message === undefined ? `improperly formatted` : message
     };
   }
 
@@ -80,10 +80,10 @@ class Validator {
    * if validation failed
    */
   invokeCustomValidation(fields) {
-    const { custom, prompt } = this.fieldDefinition;
+    const { custom, message } = this.fieldDefinition;
     return {
       passed: custom(fields),
-      message: prompt === undefined ? `custom validation failed` : prompt
+      message: message === undefined ? `custom validation failed` : message
     };
   }
 }
@@ -100,14 +100,14 @@ class DateValidator extends Validator {
    * if validation failed
    */
   greaterThan(value) {
-    const { min, prompt } = this.fieldDefinition;
+    const { min, message } = this.fieldDefinition;
     const userDate = new Date(value);
     const minDate = new Date(min);
 
     return {
       passed: +userDate >= +minDate,
       message:
-        prompt === undefined ? `should be no earlier than ${min}` : prompt
+        message === undefined ? `should be no earlier than ${min}` : message
     };
   }
 
@@ -118,12 +118,13 @@ class DateValidator extends Validator {
    * if validation failed
    */
   lessThan(value) {
-    const { max, prompt } = this.fieldDefinition;
+    const { max, message } = this.fieldDefinition;
     const userDate = new Date(value);
     const maxDate = new Date(max);
     return {
       passed: +userDate <= +maxDate,
-      message: prompt === undefined ? `should be no later than ${max}` : prompt
+      message:
+        message === undefined ? `should be no later than ${max}` : message
     };
   }
 }
@@ -140,10 +141,11 @@ class NumberValidator extends Validator {
    * if validation failed
    */
   greaterThan(value) {
-    const { min, prompt } = this.fieldDefinition;
+    const { min, message } = this.fieldDefinition;
     return {
       passed: Number(value) >= Number(min),
-      message: prompt === undefined ? `should not be less than ${min}` : prompt
+      message:
+        message === undefined ? `should not be less than ${min}` : message
     };
   }
 
@@ -154,10 +156,11 @@ class NumberValidator extends Validator {
    * if validation failed
    */
   lessThan(value) {
-    const { max, prompt } = this.fieldDefinition;
+    const { max, message } = this.fieldDefinition;
     return {
       passed: Number(value) <= Number(max),
-      message: prompt === undefined ? `should not be more than ${max}` : prompt
+      message:
+        message === undefined ? `should not be more than ${max}` : message
     };
   }
 }
@@ -174,13 +177,13 @@ class StringValidator extends Validator {
    * if validation failed
    */
   greaterThan(value) {
-    const { min, prompt } = this.fieldDefinition;
+    const { min, message } = this.fieldDefinition;
     return {
       passed: value.length >= min,
       message:
-        prompt === undefined
+        message === undefined
           ? `should be no shorter than ${min} characters`
-          : prompt
+          : message
     };
   }
 
@@ -191,13 +194,13 @@ class StringValidator extends Validator {
    * if validation failed
    */
   lessThan(value) {
-    const { max, prompt } = this.fieldDefinition;
+    const { max, message } = this.fieldDefinition;
     return {
       passed: value.length <= max,
       message:
-        prompt === undefined
+        message === undefined
           ? `should be no longer than ${max} characters`
-          : prompt
+          : message
     };
   }
 }

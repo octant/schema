@@ -13,7 +13,7 @@ describe("StringValidator", () => {
     required: true,
     min: 2,
     max: 6,
-    prompt: "should be between 2 and 6"
+    message: "should be between 2 and 6"
   };
 
   const validator = new StringValidator(fieldDefinition);
@@ -39,7 +39,7 @@ describe("StringValidator", () => {
     ]);
   });
 
-  test("returns a custom message when prompt is present and validation fails", () => {
+  test("returns a custom message when message is present and validation fails", () => {
     expect(customMessageValidator.validate("t", fields)).toEqual([
       "should be between 2 and 6"
     ]);

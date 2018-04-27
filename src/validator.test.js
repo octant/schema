@@ -34,13 +34,13 @@ describe("Validator", () => {
     ]);
   });
 
-  test("returns a custom message if prompt is included in definition", () => {
+  test("returns a custom message if message is included in definition", () => {
     const customValidator = new Validator({
       type: "text",
       custom: ({ age }) => age < 40,
       required: true,
       pattern: /test/i,
-      prompt: 'must contain "test" and age has to be less than 40'
+      message: 'must contain "test" and age has to be less than 40'
     });
 
     const result = customValidator.validate("taste", fields);

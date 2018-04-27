@@ -12,13 +12,13 @@ export default class StringValidator extends Validator {
    * if validation failed
    */
   greaterThan(value) {
-    const { min, prompt } = this.fieldDefinition;
+    const { min, message } = this.fieldDefinition;
     return {
       passed: value.length >= min,
       message:
-        prompt === undefined
+        message === undefined
           ? `should be no shorter than ${min} characters`
-          : prompt
+          : message
     };
   }
 
@@ -29,13 +29,13 @@ export default class StringValidator extends Validator {
    * if validation failed
    */
   lessThan(value) {
-    const { max, prompt } = this.fieldDefinition;
+    const { max, message } = this.fieldDefinition;
     return {
       passed: value.length <= max,
       message:
-        prompt === undefined
+        message === undefined
           ? `should be no longer than ${max} characters`
-          : prompt
+          : message
     };
   }
 }

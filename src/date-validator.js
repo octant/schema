@@ -12,7 +12,7 @@ export default class DateValidator extends Validator {
    * if validation failed
    */
   greaterThan(value) {
-    const { min, prompt } = this.fieldDefinition;
+    const { min, message } = this.fieldDefinition;
     const userYMD = value.split("-");
     const minYMD = min.split("-");
     const userDate = new Date(userYMD[0], userYMD[1] - 1, userYMD[0]);
@@ -21,7 +21,7 @@ export default class DateValidator extends Validator {
     return {
       passed: +userDate >= +minDate,
       message:
-        prompt === undefined ? `should be no earlier than ${min}` : prompt
+        message === undefined ? `should be no earlier than ${min}` : message
     };
   }
 
@@ -32,7 +32,7 @@ export default class DateValidator extends Validator {
    * if validation failed
    */
   lessThan(value) {
-    const { max, prompt } = this.fieldDefinition;
+    const { max, message } = this.fieldDefinition;
     const userYMD = value.split("-");
     const maxYMD = max.split("-");
     const userDate = new Date(userYMD[0], userYMD[1] - 1, userYMD[0]);
@@ -40,7 +40,8 @@ export default class DateValidator extends Validator {
 
     return {
       passed: +userDate <= +maxDate,
-      message: prompt === undefined ? `should be no later than ${max}` : prompt
+      message:
+        message === undefined ? `should be no later than ${max}` : message
     };
   }
 }

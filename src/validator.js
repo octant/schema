@@ -66,10 +66,10 @@ export default class Validator {
    * if validation failed
    */
   properlyFormatted(value) {
-    const { pattern, prompt } = this.fieldDefinition;
+    const { pattern, message } = this.fieldDefinition;
     return {
       passed: pattern.test(value),
-      message: prompt === undefined ? `improperly formatted` : prompt
+      message: message === undefined ? `improperly formatted` : message
     };
   }
 
@@ -80,10 +80,10 @@ export default class Validator {
    * if validation failed
    */
   invokeCustomValidation(fields) {
-    const { custom, prompt } = this.fieldDefinition;
+    const { custom, message } = this.fieldDefinition;
     return {
       passed: custom(fields),
-      message: prompt === undefined ? `custom validation failed` : prompt
+      message: message === undefined ? `custom validation failed` : message
     };
   }
 }
