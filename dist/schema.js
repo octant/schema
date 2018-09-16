@@ -252,7 +252,7 @@ class Schema {
         required ||
         alwaysCheck ||
         (checkAll && (required || fields[key] !== "")) ||
-        defaultValue !== fields[key];
+        (defaultValue !== fields[key] && fields[key] !== "");
       if (check) {
         const messages =
           fields[key] !== undefined
